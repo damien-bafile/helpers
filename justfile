@@ -108,7 +108,7 @@ npm *args:
 
 # npm install
 npm-install package="":
-    docker-compose exec npm sh -c "npm install {{package}}
+    docker-compose exec npm sh -c "npm install {{package}}"
 
 # npm install package --save
 npm-save package:
@@ -116,7 +116,7 @@ npm-save package:
 
 # npm npm run dev
 npm-dev:
-    docker-compose run --rm -w npm run dev
+    docker-compose exec npm npm run dev
 
 # Reset dependencies (vendor/node_modules) and reinstall
 reset-deps:
