@@ -5,7 +5,7 @@
 # ────────────────────────────────
 
 # Build all containers
-build:
+build: 
   docker-compose build
 
 # Start the services in detached mode
@@ -83,8 +83,7 @@ clear-cache:
 
 # Fresh migration with seed
 migrate-fresh:
-  docker-compose run --rm artisan cache:clear
-  docker-compose run --rm artisan config:clear
+  docker-compose run --rm artisan cache:forget spatie.permission.cache
   docker-compose run --rm artisan migrate:fresh --seed
 
 # Seed the database
@@ -108,12 +107,16 @@ npm *args:
   docker-compose run --rm npm {{args}}
 
 # npm install
-npm-install:
-    docker-compose run --rm -w /var/www/html npm install
+npm-install package="":
+    docker-compose exec npm sh -c "npm install {{package}}
+
+# npm install package --save
+npm-save package:
+    docker-compose exec npm sh -c "npm install {{package}}"
 
 # npm npm run dev
 npm-dev:
-    docker-compose run --rm -w /var/www/html npm run dev
+    docker-compose run --rm -w npm run dev
 
 # Reset dependencies (vendor/node_modules) and reinstall
 reset-deps:
